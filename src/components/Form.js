@@ -22,13 +22,14 @@ const Form = () => {
     }
 
     return (
-        <Container style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
-            <form onSubmit={handleSubmit} >
+        <Container>
+            <form style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} onSubmit={handleSubmit} >
                 <TextField 
                     onChange={(e) => setTitle(e.target.value)}
                     style={{ margin: '15px', fontWeight: 'bold', fontSize: '18px' }}
                     variant='standard' 
                     label="Title"
+                    value={title}
                 />
                 <Button
                     style={{ margin: '15px' }}

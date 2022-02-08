@@ -1,4 +1,9 @@
-import { Paper, Button, Checkbox, Container, Typography, Modal, TextField } from '@mui/material'
+import { Button, Checkbox, Container, Typography, TextField } from '@mui/material'
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import React, { useState } from 'react'
 import { makeStyles } from '@mui/styles';
 import { Box } from '@mui/system';
@@ -53,6 +58,20 @@ const modal = {
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
+}
+
+const modalResponsive = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '90%',
+    bgcolor: 'white',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+    display: 'flex',
+    flexDirection: 'column'
 }
 
 const Todo = ({ id, title, created, completed }) => {
@@ -112,8 +131,9 @@ const Todo = ({ id, title, created, completed }) => {
                     sx={{
                         fontSize: {
                             lg: 30,                           
-                            sm: 25,
-                            xs: 20,
+                            md: 25,
+                            sm: 20,
+                            xs: 13,
                         },
                         fontWeight: {
                             xs: 'bold',
@@ -130,7 +150,7 @@ const Todo = ({ id, title, created, completed }) => {
                         fontSize: {
                             lg: 20,                           
                             sm: 15,
-                            xs: 15,
+                            xs: 10,
                         }
                     }}
                     className={classes.date} 
@@ -139,19 +159,72 @@ const Todo = ({ id, title, created, completed }) => {
                     {time}
                 </Typography>
             </Box>
-            <Button onClick={handleOpen} disabled={completed ? true : false} >
+            <Button 
+                sx={{
+                    padding: {
+                        sm: '2px',
+                    },
+                    size: {
+                        sm: 'sm'
+                    }
+                }}
+                onClick={handleOpen} 
+                disabled={completed ? true : false} 
+            >
                 <EditOutlinedIcon
+                    sx={{
+                        fontSize: {
+                            lg: 30,
+                            md: 25,
+                            sm: 20,
+                            xs: 15,
+                        }
+                    }}
                     className={classes.deleteIcon} 
                     style={{ height: '50%', margin: 'auto' }} 
                 />
             </Button>
-            <Modal
+            <Dialog
+                sx={{
+                    width: {
+                        lg: '50%',
+                        sm: '80%',
+                    }
+                }} 
+                style={{ margin: 'auto' }}  
+                open={open} 
+                onClose={handleClose}
+            >
+                <DialogTitle>Edit Title</DialogTitle>
+                <DialogContent >
+                    <DialogContentText>
+                        You can edit the title here in the textfield and click the save button.
+                    </DialogContentText>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        value={edit}
+                        onChange={(e) => setEdit(e.target.value)}
+                        type="text"
+                        fullWidth
+                        variant="standard"
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={handleUpdate}>Save</Button>
+                </DialogActions>
+            </Dialog>
+            {/* <Modal
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box sx={modal}>
+                <Box sx={
+                     modal
+                    }>
                     <form onSubmit={handleUpdate} >
                         <Typography id="modal-modal-title" variant="h6" component="h2">
                             Edit the title
@@ -167,9 +240,17 @@ const Todo = ({ id, title, created, completed }) => {
                         </Box>
                     </form>
                 </Box>
-            </Modal>
+            </Modal> */}
             <Button onClick={handleDelete} >
                 <DeleteOutlinedIcon 
+                    sx={{
+                        fontSize: {
+                            lg: 30,
+                            md: 25,
+                            sm: 20,
+                            xs: 15,
+                        }
+                    }}
                     className={classes.deleteIcon} 
                     tyle={{ height: '50%', margin: 'auto' }}
                 />
